@@ -1,7 +1,7 @@
 
 export default {
   async fetch(req, env, ctx) {
-    // console.log('req', req);
+    console.log('Request', req);
     const { searchParams } = new URL(req.url);
     if (!searchParams.has('url')) {
       return Response.redirect('https://www.fansub.id', 301);

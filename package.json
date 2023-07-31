@@ -1,6 +1,12 @@
 {
-  "name": "email_worker_parser",
-  "version": "0.0.0",
+  "name": "crawler_worker",
+  "description": "FansubID Crawler~",
+  "version": "8.1.4.5",
+  "author": {
+    "name": "B. Bias A. Ch.",
+    "email": "bifeldy@gmail.com"
+  },
+  "homepage": "https://crawl.fansub.id",
   "devDependencies": {
     "wrangler": "2.6.0"
   },
