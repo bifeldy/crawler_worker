@@ -1,3 +1,8 @@
+const requestHeadersToRemove = [
+  'cf-connecting-ip',
+  'x-forwarded-for',
+  'x-real-ip'
+];
 
 export default {
   async fetch(req, env, ctx) {
@@ -15,6 +20,9 @@ export default {
     }
     let { readable, writable } = new TransformStream();
     const fwd = new Request(url, req);
+    for (const header of requestHeadersToRemove) {
+      fwd.headers.delete(header);
+    }
     const res = await fetch(fwd);
     res.body.pipeTo(writable);
     return new Response(readable, res);
