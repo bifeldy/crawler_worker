@@ -1,0 +1,12 @@
+{
+  "name": "email_worker_parser",
+  "version": "0.0.0",
+  "devDependencies": {
+    "wrangler": "2.6.0"
+  },
+  "private": true,
+  "scripts": {
+    "start": "wrangler dev",
+    "deploy": "wrangler publish"
+  }
+}
