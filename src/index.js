@@ -73,12 +73,12 @@ export default {
 
     const response = await fetch(fwdRequest);
 
-    if (response.status === 468 || response.status === 403) {
-      return new Response(response.body, response);
+    if ([101, 204, 205, 304].includes(response.status) || req.method === 'HEAD') {
+      return new Response(null, response);
     }
 
     if (response.status === 468 || response.status === 403) {
-      return new Response("IP Cloudflare Worker Di Blokir WAF", { status: response.status });
+      return new Response(response.body, response);
     }
 
     if ([301, 302, 307, 308].includes(response.status)) {
@@ -112,6 +112,10 @@ export default {
     }
     else if (contentType.includes('text/css')) {
       let cssText = await response.text();
+      if (!cssText) {
+        return new Response(null, response);
+      }
+
       cssText = cssText.replace(/url\(['"]?([^'"]+)['"]?\)/g, (match, p1) => {
         if (p1.startsWith('data:') || p1.includes(workerUrl.origin)) {
           return match;
@@ -133,6 +137,9 @@ export default {
     }
     else if (contentType.includes('javascript')) {
       let jsText = await response.text();
+      if (!jsText) {
+        return new Response(null, response);
+      }
 
       const validModes = ['all', 'partial', 'true'];
       if (validModes.includes(intercept)) {
